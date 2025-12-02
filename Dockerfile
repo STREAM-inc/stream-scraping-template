@@ -1,15 +1,21 @@
 FROM python:3.10-slim
 
+# ----- Project name (can be overridden at build/run time) -----
+# Build-time argument (optional default)
+ARG PROJECT=scraper
+# Runtime environment variable
+ENV PROJECT=${PROJECT}
+
 WORKDIR /app
 
-COPY pyproject.toml .
-COPY scrapy.cfg .
-COPY acitivityjapan ./acitivityjapan
+# Copy basic config files
+COPY pyproject.toml scrapy.cfg ./
+
+# Copy whole project (including the Scrapy module dir == $PROJECT)
+COPY . .
 
 # Install dependencies
-# Assuming requirements are in pyproject.toml, but we might need to extract them or just install directly for simplicity if no build tool is present.
-# Since user has pyproject.toml but no obvious poetry/uv in the container context yet, let's just install via pip.
-# We'll install scrapy and scrapy-redis directly as per pyproject.toml
 RUN pip install scrapy scrapy-redis
 
-CMD ["scrapy", "crawl", "acitivityjapanspider"]
+# Use a shell so that $PROJECT is expanded and concatenated with "spider"
+CMD ["sh", "-c", "scrapy crawl ${PROJECT}_spider"]

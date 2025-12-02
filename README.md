@@ -64,3 +64,13 @@ source ~/.bashrc
 ./start.sh <project_name> <host>
 cd <project_name>
 ```
+
+# 動作確認
+実際にアプリをデプロイする前にテストをしてください
+
+```sh
+make test
+```
+
+# デプロイ
+テストが完了したら実際にk3s上で動かします。

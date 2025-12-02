@@ -1,26 +1,12 @@
 #!/usr/bin/env bash
 
-# ============================================================
-# Scrapy project bootstrap script
-# Usage: ./create_scrapy_project.sh PROJECT_NAME HOST_NAME
-# Example: ./create_scrapy_project.sh cloud_sougyotecho xn--pckua2a7gp15o89zb.com
-# ============================================================
-
-# ----- Colors -----
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
-NC='\033[0m' # No Color
+NC='\033[0m'
 
-# ----- Argument check -----
-if [ -z "$1" ]; then
-  echo -e "${YELLOW}Usage:${NC} $0 PROJECT_NAME HOST_NAME"
-  echo -e "Example: $0 cloud_sougyotecho xn--pckua2a7gp15o89zb.com"
-  exit 1
-fi
-
-if [ -z "$2" ]; then
+if [ -z "$1" ] || [ -z "$2" ]; then
   echo -e "${YELLOW}Usage:${NC} $0 PROJECT_NAME HOST_NAME"
   exit 1
 fi
@@ -28,44 +14,49 @@ fi
 PROJECT="$1"
 HOST="$2"
 
-# Directory where this script is located (root)
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo
 echo -e "${BLUE}==== Creating Scrapy project ==== ${NC}"
-if ! uv run scrapy startproject "$PROJECT"; then
-  echo -e "${RED}[ERROR] Failed to run 'scrapy startproject'${NC}"
+uv run --no-project scrapy startproject "$PROJECT" || {
+  echo -e "${RED}[ERROR] scrapy startproject failed${NC}"
   exit 1
-fi
+}
 
 cd "$PROJECT" || {
-  echo -e "${RED}[ERROR] Cannot change directory to: $PROJECT${NC}"
+  echo -e "${RED}[ERROR] Cannot cd to $PROJECT${NC}"
   exit 1
 }
 
 echo
 echo -e "${BLUE}==== Creating Spider ==== ${NC}"
-if ! uv run scrapy genspider "${PROJECT}_spider" "$HOST"; then
-  echo -e "${RED}[ERROR] Failed to run 'scrapy genspider'${NC}"
+uv run scrapy genspider "${PROJECT}_spider" "$HOST" || {
+  echo -e "${RED}[ERROR] scrapy genspider failed${NC}"
   exit 1
-fi
+}
 
 echo
-echo -e "${BLUE}==== Copying common files to project root ==== ${NC}"
+echo -e "${BLUE}==== Copying common files ==== ${NC}"
 
-# List of files placed in ROOT_DIR that should be copied
 COMMON_FILES=(
   export.py
   reorder.py
+  summary.py
   Dockerfile
-  k3s
+  k3s.yml
   Makefile
 )
 
 for F in "${COMMON_FILES[@]}"; do
   if [ -e "${ROOT_DIR}/${F}" ]; then
-    echo "cp \"${ROOT_DIR}/${F}\" \"$PWD\""
-    cp -f "${ROOT_DIR}/${F}" "$PWD"
+    if [ "$F" = "Makefile" ]; then
+      echo "generate Makefile (replace APP_NAME -> ${PROJECT})"
+      # テンプレMakefile内の APP_NAME を プロジェクト名で置換して出力
+      sed "s/APP_NAME_TEMP/${PROJECT}/g" "${ROOT_DIR}/Makefile" > "${PWD}/Makefile"
+    else
+      echo "cp \"${ROOT_DIR}/${F}\" \"$PWD\""
+      cp -f "${ROOT_DIR}/${F}" "$PWD"
+    fi
   else
     echo -e "${YELLOW}[WARN] ${ROOT_DIR}/${F} not found${NC}"
   fi
@@ -73,17 +64,11 @@ done
 
 echo
 echo -e "${BLUE}==== Installing dependencies with uv ==== ${NC}"
-echo -e "${YELLOW}(Assuming 'uv' is available in your PATH)${NC}"
-
-if ! uv init; then
-  echo -e "${RED}[ERROR] Failed to run 'uv init'${NC}"
+uv init --no-workspace
+uv add scrapy scrapy-redis pandas || {
+  echo -e "${RED}[ERROR] uv add failed${NC}"
   exit 1
-fi
-
-if ! uv add scrapy scrapy-redis pandas; then
-  echo -e "${RED}[ERROR] Failed to run 'uv add'${NC}"
-  exit 1
-fi
+}
 
 echo
 echo -e "${GREEN}==== All done! ==== ${NC}"

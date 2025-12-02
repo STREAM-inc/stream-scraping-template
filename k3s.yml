@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: APPNAME
+  labels:
+    app: APPNAME
+spec:
+  selector:
+    matchLabels:
+      app: APPNAME
+  template:
+    metadata:
+      labels:
+        app: APPNAME
+    spec:
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+          - 8.8.8.8
+          - 1.1.1.1
+      containers:
+      - name: APPNAME
+        image: 192.168.100.8:5000/APPNAME:latest
+        imagePullPolicy: Always
+        env:
+        - name: REDIS_URL
+          value: "redis://192.168.100.8:6379"
