@@ -1,4 +1,4 @@
-# STRAEM Scraping manual
+# STRAEM スクレイピングマニュアル
 ## 目的
 スクレイピング業務の工数削減、透明化を図る。
 
@@ -38,3 +38,11 @@ k3sを使うことで、
 
 --- 
 
+# 手順
+## セットアップ
+自分のいつも作業をしているフォルダに移動する。
+
+[このレポジトリ](https://github.com/STREAM-inc/stream-scraping-template/archive/refs/heads/main.zip)をダウンロードして配置して解凍する。
+
+中にあるファイルをすべて作業フォルダにコピーする。
+## プロジェクト開始
