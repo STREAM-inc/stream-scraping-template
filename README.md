@@ -40,9 +40,27 @@ k3sを使うことで、
 
 # 手順
 ## セットアップ
-自分のいつも作業をしているフォルダに移動する。
+- 自分のいつも作業をしているフォルダに移動する。
 
-[このレポジトリ](https://github.com/STREAM-inc/stream-scraping-template/archive/refs/heads/main.zip)をダウンロードして配置して解凍する。
+- [このレポジトリ](https://github.com/STREAM-inc/stream-scraping-template/archive/refs/heads/main.zip)をダウンロードして配置して解凍する。
 
-中にあるファイルをすべて作業フォルダにコピーする。
+- 中にあるファイルをすべて作業フォルダにコピーする。
+
+- (optional) wslにuvをインストール
+```sh
+wsl
+sudo apt update && sudo apt upgrade -y
+sudo apt install curl git python3 python3-pip -y
+curl -LsSf https://astral.sh/uv/install.sh | sh
+echo 'export PATH=$PATH:$HOME/.local/bin' >> ~/.bashrc
+source ~/.bashrc
+```
+
+今後基本的にwsl内で作業をする
+
 ## プロジェクト開始
+
+```sh
+./start.sh <project_name> <host>
+cd <project_name>
+```
