@@ -58,7 +58,7 @@ git clone git@github.com:STREAM-inc/stream-scraping-template.git
 cd stream-scraping-template
 uv sync
 echo "export PATH=\"\$PATH:$(pwd)\"" >> ~/.bashrc
-echo "export STREAM_SCRAPER_PATH=\"$(pwd)\"" >> ~/.bashrc
+echo "export STREAM_TEMPLATE_PATH=\"$(pwd)\"" >> ~/.bashrc
 source ~/.bashrc
 ```
 
