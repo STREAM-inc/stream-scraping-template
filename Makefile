@@ -15,10 +15,10 @@ push:
 deploy:
 	sed "s/APPNAME/$(APP_NAME)/g" k3s.yml | sudo k3s kubectl apply -f -
 
-node-status:
+nodes:
 	sudo k3s kubectl get nodes
 
-pod:
+pods:
 	sudo k3s kubectl get pods
 
 delete:
@@ -32,7 +32,7 @@ delete-redis:
 test: build
 	docker run --rm $(IMAGE)
 
-all: build push deploy
+distribute: build push deploy
 
 git-commit:
 	@printf "Enter commit message: "
