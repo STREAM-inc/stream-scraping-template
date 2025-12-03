@@ -30,7 +30,7 @@ cd "$PROJECT" || {
 
 echo
 echo -e "${BLUE}==== Creating Spider ==== ${NC}"
-uv run scrapy genspider "${PROJECT}_spider" "$HOST" || {
+uv run scrapy genspider "${PROJECT}_s" "$HOST" || {
   echo -e "${RED}[ERROR] scrapy genspider failed${NC}"
   exit 1
 }
@@ -53,6 +53,9 @@ for F in "${COMMON_FILES[@]}"; do
       echo "generate Makefile (replace APP_NAME -> ${PROJECT})"
       # テンプレMakefile内の APP_NAME を プロジェクト名で置換して出力
       sed "s/APP_NAME_TEMP/${PROJECT}/g" "${ROOT_DIR}/Makefile" > "${PWD}/Makefile"
+    elif [ "$F" = "k3s.yml" ]; then
+      echo "generate k3s.yml (replace APPNAME -> ${PROJECT})"
+      sed "s/APPNAME/${PROJECT}/g" "${ROOT_DIR}/k3s.yml" > "${PWD}/k3s.yml"
     else
       echo "cp \"${ROOT_DIR}/${F}\" \"$PWD\""
       cp -f "${ROOT_DIR}/${F}" "$PWD"
@@ -74,3 +77,4 @@ echo
 echo -e "${GREEN}==== All done! ==== ${NC}"
 echo -e "Project : ${GREEN}${PROJECT}${NC}"
 echo -e "Host    : ${GREEN}${HOST}${NC}"
+

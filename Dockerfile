@@ -8,14 +8,15 @@ ENV PROJECT=${PROJECT}
 
 WORKDIR /app
 
+
+# Install dependencies
+RUN pip install scrapy scrapy-redis
+
 # Copy basic config files
 COPY pyproject.toml scrapy.cfg ./
 
 # Copy whole project (including the Scrapy module dir == $PROJECT)
 COPY . .
 
-# Install dependencies
-RUN pip install scrapy scrapy-redis
-
 # Use a shell so that $PROJECT is expanded and concatenated with "spider"
-CMD ["sh", "-c", "scrapy crawl ${PROJECT}_spider"]
+CMD ["sh", "-c", "scrapy crawl ${PROJECT}_s"]

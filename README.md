@@ -40,13 +40,8 @@ k3sを使うことで、
 
 # 手順
 ## セットアップ
-- 自分のいつも作業をしているフォルダに移動する。
 
-- [このレポジトリ](https://github.com/STREAM-inc/stream-scraping-template/archive/refs/heads/main.zip)をダウンロードして配置して解凍する。
-
-- 中にあるファイルをすべて作業フォルダにコピーする。
-
-- (optional) wslにuvをインストール
+### wslにuvをインストール
 ```sh
 wsl
 sudo apt update && sudo apt upgrade -y
@@ -55,6 +50,17 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 echo 'export PATH=$PATH:$HOME/.local/bin' >> ~/.bashrc
 source ~/.bashrc
 ```
+
+### テンプレートをインストール
+```sh
+wsl
+git clone git@github.com:STREAM-inc/stream-scraping-template.git
+cd stream-scraping-template
+uv sync
+echo "export PATH=\"\$PATH:$(pwd)\"" >> ~/.bashrc
+source ~/.bashrc
+```
+
 
 今後基本的にwsl内で作業をする
 
