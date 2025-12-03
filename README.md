@@ -58,6 +58,7 @@ git clone git@github.com:STREAM-inc/stream-scraping-template.git
 cd stream-scraping-template
 uv sync
 echo "export PATH=\"\$PATH:$(pwd)\"" >> ~/.bashrc
+echo "export STREAM_SCRAPER_PATH=\"$(pwd)\"" >> ~/.bashrc
 source ~/.bashrc
 ```
 
@@ -67,7 +68,7 @@ source ~/.bashrc
 ## プロジェクト開始
 
 ```sh
-./start.sh <project_name> <host>
+start-scraping.sh <project_name> <host>
 cd <project_name>
 ```
 

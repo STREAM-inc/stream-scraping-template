@@ -15,10 +15,11 @@ PROJECT="$1"
 HOST="$2"
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PYTHON_PATH="${STREAM_TEMPLATE_PATH}/.venv/bin/python3.10"
 
 echo
 echo -e "${BLUE}==== Creating Scrapy project ==== ${NC}"
-uv run --no-project scrapy startproject "$PROJECT" || {
+${PYTHON_PATH} -m scrapy startproject "$PROJECT" || {
   echo -e "${RED}[ERROR] scrapy startproject failed${NC}"
   exit 1
 }
@@ -30,7 +31,7 @@ cd "$PROJECT" || {
 
 echo
 echo -e "${BLUE}==== Creating Spider ==== ${NC}"
-uv run scrapy genspider "${PROJECT}_s" "$HOST" || {
+${PYTHON_PATH} -m scrapy genspider "${PROJECT}_s" "$HOST" || {
   echo -e "${RED}[ERROR] scrapy genspider failed${NC}"
   exit 1
 }
