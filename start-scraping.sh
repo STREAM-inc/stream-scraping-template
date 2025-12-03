@@ -15,6 +15,7 @@ PROJECT="$1"
 HOST="$2"
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+: "${STREAM_TEMPLATE_PATH:=$ROOT_DIR}"
 PYTHON_PATH="${STREAM_TEMPLATE_PATH}/.venv/bin/python3.10"
 
 echo
@@ -26,6 +27,16 @@ ${PYTHON_PATH} -m scrapy startproject "$PROJECT" || {
 
 cd "$PROJECT" || {
   echo -e "${RED}[ERROR] Cannot cd to $PROJECT${NC}"
+  exit 1
+}
+
+echo
+echo -e "${BLUE}==== Generating settings.py ==== ${NC}"
+${PYTHON_PATH} "${ROOT_DIR}/render.py" \
+  --project-name "$PROJECT" \
+  --template-dir "$ROOT_DIR" \
+  --output-path "$PWD/$PROJECT/settings.py" || {
+  echo -e "${RED}[ERROR] Failed to generate settings.py${NC}"
   exit 1
 }
 

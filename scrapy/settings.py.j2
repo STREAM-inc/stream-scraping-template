@@ -1,0 +1,44 @@
+# Scrapy settings for {{ project_name }} project
+
+BOT_NAME = "{{ project_name }}"
+
+SPIDER_MODULES = ["{{ project_name }}.spiders"]
+NEWSPIDER_MODULE = "{{ project_name }}.spiders"
+
+ADDONS = {}
+
+USER_AGENT = "{{ user_agent }}"
+
+ROBOTSTXT_OBEY = {{robotstxt_obey}}
+
+CONCURRENT_REQUESTS = {{concurrent_requests}}
+CONCURRENT_REQUESTS_PER_DOMAIN = {{concurrent_requests_per_domain}}
+
+DOWNLOAD_DELAY = {{download_delay}}
+RANDOMIZE_DOWNLOAD_DELAY = {{randomize_download_delay}}
+
+AUTOTHROTTLE_ENABLED = {{autothrottle_enabled}}
+AUTOTHROTTLE_START_DELAY = {{autothrottle_start_delay}}
+AUTOTHROTTLE_MAX_DELAY = {{autothrottle_max_delay}}
+AUTOTHROTTLE_TARGET_CONCURRENCY = {{autothrottle_target_concurrency}}
+AUTOTHROTTLE_DEBUG = {{autothrottle_debug}}
+
+RETRY_ENABLED = {{retry_enabled}}
+RETRY_TIMES = {{retry_times}}
+RETRY_HTTP_CODES = [500, 502, 503, 504, 408, 429, 403]
+RETRY_PRIORITY_ADJUST = {{retry_priority_adjust}}
+
+FEED_EXPORT_ENCODING = "utf-8"
+
+import os
+
+SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+REDIS_URL = os.getenv("REDIS_URL", "{{ default_redis_url }}")
+SCHEDULER_PERSIST = {{scheduler_persist}}
+
+REDIS_ITEMS_KEY = "%(spider)s:items"
+
+ITEM_PIPELINES = {
+    "scrapy_redis.pipelines.RedisPipeline": 300,
+}
