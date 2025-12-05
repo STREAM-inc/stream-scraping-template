@@ -1,6 +1,7 @@
 APP_NAME := APP_NAME_TEMP
 TAG := latest
 REGISTRY := 192.168.100.8:5000
+REDIS_HOST := 192.168.100.8:6379
 IMAGE := $(APP_NAME):$(TAG)
 REMOTE_IMAGE := $(REGISTRY)/$(IMAGE)
 
@@ -25,11 +26,14 @@ delete:
 	sudo k3s kubectl delete -f k3s.yaml
 
 delete-redis:
-	redis-cli DEL $(APP_NAME):requests
-	redis-cli DEL $(APP_NAME):dupefilter
-	redis-cli DEL $(APP_NAME):items
+	redis-cli -h $(REDIS_HOST) DEL $(APP_NAME)_s:requests
+	redis-cli -h $(REDIS_HOST) DEL $(APP_NAME)_s:dupefilter
+	redis-cli -h $(REDIS_HOST) DEL $(APP_NAME)_s:items
 
-test: build
+test:
+	uv run scrapy crawl $(APP_NAME)_s -o output.csv
+
+test-docker: build
 	docker run --rm $(IMAGE)
 
 distribute: build push deploy

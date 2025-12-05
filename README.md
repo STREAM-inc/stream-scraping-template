@@ -45,6 +45,17 @@ prometheusを使うことで
 - 柔軟な監視 -> 速度、異常事態を通知
 - grafanaへのエクスポート -> 状況の可視化
 
+#### metrics
+- scraper_site_visited_count
+- scraper_site_visited_total
+- scraper_site_visited_rate
+- scraper_site_visited_error_count
+- scraper_site_visited_error_total
+- scraper_site_visited_error_rate
+- scraper_site_extracted_count
+- scraper_site_extracted_total
+- scraper_site_extracted_rate
+
 # 手順
 ## セットアップ
 
