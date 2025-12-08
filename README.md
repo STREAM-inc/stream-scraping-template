@@ -80,11 +80,18 @@ echo "export STREAM_TEMPLATE_PATH=\"$(pwd)\"" >> ~/.bashrc
 source ~/.bashrc
 ```
 
+### アップデート
+```sh
+wsl
+cd <path-to-stream-scraping-template>
+git checkout main
+git pull origin main
+```
 
-今後基本的にwsl内で作業をする
+今後基本的にwsl内で作業をする。wslないなら基本どこでもいいがホームディレクトリ直下などでやると良いと思う。stream-scraping-template内では作業しないでください。
 
 ## プロジェクト開始
-
+プロジェクト名はすべて小文字にしてください。
 ```sh
 start-scraping.sh <project_name> <host>
 cd <project_name>
@@ -99,3 +106,4 @@ make test
 
 # デプロイ
 テストが完了したら実際にk3s上で動かします。
+
