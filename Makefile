@@ -26,9 +26,9 @@ delete:
 	sudo k3s kubectl delete -f k3s.yaml
 
 delete-redis:
-	redis-cli -h $(REDIS_HOST) DEL $(APP_NAME)_s:requests
-	redis-cli -h $(REDIS_HOST) DEL $(APP_NAME)_s:dupefilter
-	redis-cli -h $(REDIS_HOST) DEL $(APP_NAME)_s:items
+	redis-cli DEL $(APP_NAME)_s:requests -h $(REDIS_HOST)
+	redis-cli DEL $(APP_NAME)_s:dupefilter -h $(REDIS_HOST)
+	redis-cli DEL $(APP_NAME)_s:items -h $(REDIS_HOST)
 
 test:
 	uv run scrapy crawl $(APP_NAME)_s -o output.csv
