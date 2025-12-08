@@ -33,7 +33,7 @@ def main():
         "retry_enabled": True,
         "retry_times": 10,
         "retry_priority_adjust": -1,
-        "default_redis_url": "redis://192.168.100.8:6379",
+        "default_redis_url": "redis://127.0.0.1:6379",
         "scheduler_persist": True,
     }
 
@@ -51,3 +51,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
