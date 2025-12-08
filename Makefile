@@ -1,7 +1,7 @@
 APP_NAME := APP_NAME_TEMP
 TAG := latest
 REGISTRY := 192.168.100.8:5000
-REDIS_HOST := 192.168.100.8:6379
+REDIS_HOST := 127.0.0.1:6379
 IMAGE := $(APP_NAME):$(TAG)
 REMOTE_IMAGE := $(REGISTRY)/$(IMAGE)
 
@@ -50,3 +50,4 @@ export:
 	uv run export.py
 	uv run reorder.py
 	uv run summary.py
+
