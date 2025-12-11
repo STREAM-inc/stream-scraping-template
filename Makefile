@@ -1,7 +1,7 @@
 APP_NAME := APP_NAME_TEMP
 TAG := latest
 REGISTRY := 192.168.100.3:5000
-REDIS_HOST := 127.0.0.1:6379
+REDIS_HOST := 192.168.100.3:6379
 IMAGE := $(APP_NAME):$(TAG)
 REMOTE_IMAGE := $(REGISTRY)/$(IMAGE)
 
@@ -23,7 +23,7 @@ pods:
 	sudo k3s kubectl get pods
 
 delete:
-	sudo k3s kubectl delete -f k3s.yaml
+	sudo k3s kubectl delete -f k3s.yml
 
 delete-redis:
 	redis-cli DEL $(APP_NAME)_s:requests -h $(REDIS_HOST)
@@ -46,7 +46,7 @@ git-commit:
 	git push origin main
 
 export:
-	redis-cli LRANGE $(APP_NAME):items 0 -1 > dump.txt
+	redis-cli LRANGE $(APP_NAME)_s:items 0 -1 > dump.txt
 	uv run export.py
 	uv run reorder.py
 	uv run summary.py
