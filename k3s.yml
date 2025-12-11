@@ -20,8 +20,8 @@ spec:
           - 1.1.1.1
       containers:
       - name: APPNAME
-        image: 192.168.100.8:5000/APPNAME:latest
+        image: 192.168.100.3:5000/APPNAME:latest
         imagePullPolicy: Always
         env:
         - name: REDIS_URL
-          value: "redis://192.168.100.8:6379"
+          value: "redis://192.168.100.3:6379"
