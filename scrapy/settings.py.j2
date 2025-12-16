@@ -30,15 +30,6 @@ RETRY_PRIORITY_ADJUST = {{retry_priority_adjust}}
 
 FEED_EXPORT_ENCODING = "utf-8"
 
-import os
-
-SCHEDULER = "scrapy_redis.scheduler.Scheduler"
-DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
-REDIS_URL = os.getenv("REDIS_URL", "{{ default_redis_url }}")
-SCHEDULER_PERSIST = {{scheduler_persist}}
-
-REDIS_ITEMS_KEY = "%(spider)s:items"
-
 ITEM_PIPELINES = {
     'crawlab.CrawlabPipeline': 888,
 }
