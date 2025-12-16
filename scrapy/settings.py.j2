@@ -40,5 +40,5 @@ SCHEDULER_PERSIST = {{scheduler_persist}}
 REDIS_ITEMS_KEY = "%(spider)s:items"
 
 ITEM_PIPELINES = {
-    "scrapy_redis.pipelines.RedisPipeline": 300,
+    'crawlab.CrawlabPipeline': 888,
 }
