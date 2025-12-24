@@ -2,7 +2,6 @@
 ## 目的
 スクレイピング業務の工数削減、透明化を図る。
 
-# 手順
 ## セットアップ
 
 ### wslにuvをインストール
@@ -14,17 +13,18 @@ echo 'export PATH=$PATH:$HOME/.local/bin' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-### wslにdockerをインストール
+### テンプレートをインストール
+```sh
+git clone git@github.com:STREAM-inc/stream-scraping-template.git
+cd stream-scraping-template
+uv sync
+echo "export PATH=\"\$PATH:$(pwd)\"" >> ~/.bashrc
+echo "export STREAM_TEMPLATE_PATH=\"$(pwd)\"" >> ~/.bashrc
+source ~/.bashrc
 ```
-sudo apt-get update
-sudo apt-get install -y ca-certificates curl gnupg lsb-release
 
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-sudo apt-get update
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
-```
+## 始める
+[こちらのガイドを見てください](https://github.com/STREAM-inc/stream-scraping-template/get-started.md)
 
 ## Crawlabの設定
 crawlabで複数のコンピューターを使う場合、masterとworkerという役割分担があります。masterは一番信頼できる、スペックの高い環境で実行するのが望ましいです。
@@ -139,16 +139,6 @@ EOF
 ```
 
 
-### テンプレートをインストール
-```sh
-git clone git@github.com:STREAM-inc/stream-scraping-template.git
-cd stream-scraping-template
-uv sync
-echo "export PATH=\"\$PATH:$(pwd)\"" >> ~/.bashrc
-echo "export STREAM_TEMPLATE_PATH=\"$(pwd)\"" >> ~/.bashrc
-source ~/.bashrc
-```
-
 ### アップデート
 ```sh
 wsl
@@ -159,12 +149,6 @@ git pull origin main
 
 今後基本的にwsl内で作業をする。wslないなら基本どこでもいいがホームディレクトリ直下などでやると良いと思う。stream-scraping-template内では作業しないでください。
 
-## プロジェクト開始
-プロジェクト名はすべて小文字にしてください。
-```sh
-start-scraping.sh <project_name> <host>
-cd <project_name>
-```
 
 # 動作確認
 実際にアプリをデプロイする前にテストをしてください
@@ -175,5 +159,3 @@ make test
 
 # デプロイ
 テストが完了したら実際にk3s上で動かします。
-
-
