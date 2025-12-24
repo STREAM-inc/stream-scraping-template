@@ -24,7 +24,7 @@ source ~/.bashrc
 ```
 
 ## 始める
-[こちらのガイドを見てください](https://github.com/STREAM-inc/stream-scraping-template/get-started.md)
+[こちらのガイドを見てください](https://github.com/STREAM-inc/stream-scraping-template/blob/main/get-started.md)
 
 ## Crawlabの設定
 crawlabで複数のコンピューターを使う場合、masterとworkerという役割分担があります。masterは一番信頼できる、スペックの高い環境で実行するのが望ましいです。
