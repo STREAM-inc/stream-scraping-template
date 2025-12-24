@@ -18,6 +18,11 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 : "${STREAM_TEMPLATE_PATH:=$ROOT_DIR}"
 PYTHON_PATH="${STREAM_TEMPLATE_PATH}/.venv/bin/python3.10"
 
+if [ ! -x "$PYTHON_PATH" ]; then
+  echo -e "${RED}[ERROR] Python not found: $PYTHON_PATH${NC}"
+  exit 1
+fi
+
 echo
 echo -e "${BLUE}==== Creating Scrapy project ==== ${NC}"
 ${PYTHON_PATH} -m scrapy startproject "$PROJECT" || {
@@ -35,8 +40,20 @@ echo -e "${BLUE}==== Generating settings.py ==== ${NC}"
 ${PYTHON_PATH} "${ROOT_DIR}/render.py" \
   --project-name "$PROJECT" \
   --template-dir "$ROOT_DIR" \
+  --template-file "templates/settings.py.j2" \
   --output-path "$PWD/$PROJECT/settings.py" || {
   echo -e "${RED}[ERROR] Failed to generate settings.py${NC}"
+  exit 1
+}
+
+echo
+echo -e "${BLUE}==== Generating Makefile ==== ${NC}"
+${PYTHON_PATH} "${ROOT_DIR}/render.py" \
+  --project-name "$PROJECT" \
+  --template-dir "$ROOT_DIR" \
+  --template-file "templates/Makefile.j2" \
+  --output-path "$PWD/Makefile" || {
+  echo -e "${RED}[ERROR] Failed to generate Makefile${NC}"
   exit 1
 }
 
@@ -48,45 +65,6 @@ ${PYTHON_PATH} -m scrapy genspider "${PROJECT}_s" "$HOST" || {
 }
 
 echo
-echo -e "${BLUE}==== Copying common files ==== ${NC}"
-
-COMMON_FILES=(
-  export.py
-  reorder.py
-  summary.py
-  Dockerfile
-  k3s.yml
-  Makefile
-)
-
-for F in "${COMMON_FILES[@]}"; do
-  if [ -e "${ROOT_DIR}/${F}" ]; then
-    if [ "$F" = "Makefile" ]; then
-      echo "generate Makefile (replace APP_NAME -> ${PROJECT})"
-      # テンプレMakefile内の APP_NAME を プロジェクト名で置換して出力
-      sed "s/APP_NAME_TEMP/${PROJECT}/g" "${ROOT_DIR}/Makefile" > "${PWD}/Makefile"
-    elif [ "$F" = "k3s.yml" ]; then
-      echo "generate k3s.yml (replace APPNAME -> ${PROJECT})"
-      sed "s/APPNAME/${PROJECT}/g" "${ROOT_DIR}/k3s.yml" > "${PWD}/k3s.yml"
-    else
-      echo "cp \"${ROOT_DIR}/${F}\" \"$PWD\""
-      cp -f "${ROOT_DIR}/${F}" "$PWD"
-    fi
-  else
-    echo -e "${YELLOW}[WARN] ${ROOT_DIR}/${F} not found${NC}"
-  fi
-done
-
-echo
-echo -e "${BLUE}==== Installing dependencies with uv ==== ${NC}"
-uv init --no-workspace
-uv add scrapy scrapy-redis pandas || {
-  echo -e "${RED}[ERROR] uv add failed${NC}"
-  exit 1
-}
-
-echo
 echo -e "${GREEN}==== All done! ==== ${NC}"
 echo -e "Project : ${GREEN}${PROJECT}${NC}"
 echo -e "Host    : ${GREEN}${HOST}${NC}"
-
