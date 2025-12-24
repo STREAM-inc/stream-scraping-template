@@ -1,5 +1,7 @@
 # Scrapy settings for {{ project_name }} project
 
+import os
+
 BOT_NAME = "{{ project_name }}"
 
 SPIDER_MODULES = ["{{ project_name }}.spiders"]
@@ -30,6 +32,7 @@ RETRY_PRIORITY_ADJUST = {{retry_priority_adjust}}
 
 FEED_EXPORT_ENCODING = "utf-8"
 
-ITEM_PIPELINES = {
-    'crawlab.CrawlabPipeline': 888,
-}
+if not os.environ.get("CRAWL_DEBUG", True):
+    ITEM_PIPELINES = {
+        'crawlab.CrawlabPipeline': 888,
+    }

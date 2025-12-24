@@ -4,17 +4,33 @@ from jinja2 import Environment, FileSystemLoader
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Render Scrapy settings template.")
+    parser = argparse.ArgumentParser(description="Render a Jinja2 template file.")
     parser.add_argument(
-        "--project-name", default=os.getenv("PROJECT_NAME", "tsukulink"), help="Name of the Scrapy project"
+        "--project-name",
+        default=os.getenv("PROJECT_NAME", "tsukulink"),
+        help="Name of the Scrapy project (also available as env PROJECT_NAME)",
     )
-    parser.add_argument("--output-path", default="settings.py", help="Path to write the generated settings.py")
-    parser.add_argument("--template-dir", default=".", help="Directory containing the templates")
+    parser.add_argument(
+        "--template-dir",
+        default=".",
+        help="Directory containing templates (default: current dir)",
+    )
+    parser.add_argument(
+        "--template-file",
+        default=os.getenv("TEMPLATE_FILE", "scrapy/settings.py.j2"),
+        help="Template file path relative to --template-dir "
+        "(default: scrapy/settings.py.j2, env: TEMPLATE_FILE)",
+    )
+    parser.add_argument(
+        "--output-path",
+        default=os.getenv("OUTPUT_PATH", "settings.py"),
+        help="Output path to write rendered file (default: settings.py, env: OUTPUT_PATH)",
+    )
 
     args = parser.parse_args()
 
     env = Environment(loader=FileSystemLoader(args.template_dir))
-    template = env.get_template("scrapy/settings.py.j2")
+    template = env.get_template(args.template_file)
 
     context = {
         "project_name": args.project_name,
@@ -42,15 +58,19 @@ def main():
 
     rendered = template.render(**context)
 
-    # Ensure directory exists
-    output_dir = os.path.dirname(args.output_path)
+    # Ensure output directory exists
+    output_dir = os.path.dirname(os.path.abspath(args.output_path))
     if output_dir:
         os.makedirs(output_dir, exist_ok=True)
 
     with open(args.output_path, "w", encoding="utf-8") as f:
         f.write(rendered)
 
-    print(f"Generated {args.output_path} for project {args.project_name}")
+    print(
+        f"Generated {args.output_path} "
+        f"from {os.path.join(args.template_dir, args.template_file)} "
+        f"for project {args.project_name}"
+    )
 
 
 if __name__ == "__main__":

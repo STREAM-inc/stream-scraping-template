@@ -40,8 +40,20 @@ echo -e "${BLUE}==== Generating settings.py ==== ${NC}"
 ${PYTHON_PATH} "${ROOT_DIR}/render.py" \
   --project-name "$PROJECT" \
   --template-dir "$ROOT_DIR" \
+  --template-file "templates/settings.py.j2" \
   --output-path "$PWD/$PROJECT/settings.py" || {
   echo -e "${RED}[ERROR] Failed to generate settings.py${NC}"
+  exit 1
+}
+
+echo
+echo -e "${BLUE}==== Generating Makefile ==== ${NC}"
+${PYTHON_PATH} "${ROOT_DIR}/render.py" \
+  --project-name "$PROJECT" \
+  --template-dir "$ROOT_DIR" \
+  --template-file "templates/Makefile.j2" \
+  --output-path "$PWD/Makefile" || {
+  echo -e "${RED}[ERROR] Failed to generate Makefile${NC}"
   exit 1
 }
 
