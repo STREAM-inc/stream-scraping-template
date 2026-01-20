@@ -1,0 +1,1296 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://stream-inc.github.io/stream-scraping-template/tutorials/paypaygurume/">
+      
+      
+        <link rel="prev" href="../../guide/3-1/">
+      
+      
+        <link rel="next" href="../../setup/wsl/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>PayPayグルメ - STREAMスクレイピングマニュアル</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#scrapypaypaystep-by-step" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href="../.." title="STREAMスクレイピングマニュアル" class="md-header__button md-logo" aria-label="STREAMスクレイピングマニュアル" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            STREAMスクレイピングマニュアル
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PayPayグルメ
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="STREAMスクレイピングマニュアル" class="md-nav__button md-logo" aria-label="STREAMスクレイピングマニュアル" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    STREAMスクレイピングマニュアル
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    スクレイピング手順
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    スクレイピング手順
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guide/1-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 取得できる項目を列挙する
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guide/1-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 html構造を見つける
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guide/2-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 ページタイプを分類する
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guide/2-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 起点URLを決める
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guide/3-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 まとめ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    チュートリアル
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    チュートリアル
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PayPayグルメ
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PayPayグルメ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#step-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1. 詳細ページで「取得したい項目」と「取り方」を確定する
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1. 詳細ページで「取得したい項目」と「取り方」を確定する">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-1-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-1. 代表の詳細ページを1つ見て、取れる項目を列挙する
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-2. 表記ゆれがないかを別ページで検証する
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-htmldevtools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2. 「ページ内の各データの取り方」をHTMLから確定する（DevToolsで確認）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 2. 「ページ内の各データの取り方」をHTMLから確定する（DevToolsで確認）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2-1. 基本情報（店舗詳細ページ）での取得方法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#id-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        &gt; 優先度でいうと、 特殊な属性 &gt; id &gt; classである。
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3. 詳細ページへの導線URLパターンを整理する（どこから辿るか）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 3. 詳細ページへの導線URLパターンを整理する（どこから辿るか）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3-1-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3-1. ページタイプを分類する（導線ページのURLパターン）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4. 詳細ページURLパターンを決める（どれが詳細か判定する）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4. 詳細ページURLパターンを決める（どれが詳細か判定する）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4-1-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4-1. 詳細ページの共通点をURLから見つける
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4-2. 詳細ページ判定ルールを明文化する
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-urlstart_urls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5. 入口（起点URL）を決める（start_urls）
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Setup
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../setup/wsl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WSL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prompts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Prompts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../prompts/spider/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spider
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#step-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1. 詳細ページで「取得したい項目」と「取り方」を確定する
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1. 詳細ページで「取得したい項目」と「取り方」を確定する">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-1-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-1. 代表の詳細ページを1つ見て、取れる項目を列挙する
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-2. 表記ゆれがないかを別ページで検証する
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-htmldevtools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2. 「ページ内の各データの取り方」をHTMLから確定する（DevToolsで確認）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 2. 「ページ内の各データの取り方」をHTMLから確定する（DevToolsで確認）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2-1. 基本情報（店舗詳細ページ）での取得方法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#id-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        &gt; 優先度でいうと、 特殊な属性 &gt; id &gt; classである。
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3. 詳細ページへの導線URLパターンを整理する（どこから辿るか）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 3. 詳細ページへの導線URLパターンを整理する（どこから辿るか）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3-1-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3-1. ページタイプを分類する（導線ページのURLパターン）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4. 詳細ページURLパターンを決める（どれが詳細か判定する）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4. 詳細ページURLパターンを決める（どれが詳細か判定する）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4-1-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4-1. 詳細ページの共通点をURLから見つける
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4-2. 詳細ページ判定ルールを明文化する
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-urlstart_urls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5. 入口（起点URL）を決める（start_urls）
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="scrapypaypaystep-by-step">ScrapyでPayPayグルメをスクレイピングするための事前整理（Step by Step）</h1>
+<p>このチュートリアルでは、requests + BeautifulSoupでスクレイピングできるサイトを、<strong>Scrapyで再現</strong>するために必要な「事前整理」をまとめます。<br />
+（全体の流れは <a href="/guide/scraping/">ここ</a> を参照）</p>
+<hr />
+<h2 id="step-1">Step 1. 詳細ページで「取得したい項目」と「取り方」を確定する</h2>
+<h3 id="1-1-1">1-1. 代表の詳細ページを1つ見て、取れる項目を列挙する</h3>
+<p>例：店舗ページ<br />
+https://paypaygourmet.yahoo.co.jp/105355</p>
+<p>店舗情報セクションから、最低限これが取れることを確認する：
+- 業種（複数の可能性あり）
+- 店名
+- 都道府県
+- 住所
+- 電話番号</p>
+<h3 id="1-2">1-2. 表記ゆれがないかを別ページで検証する</h3>
+<p>例：<br />
+https://paypaygourmet.yahoo.co.jp/132304<br />
+同じ項目が同じ表記で載っているか確認する。</p>
+<hr />
+<h2 id="step-2-htmldevtools">Step 2. 「ページ内の各データの取り方」をHTMLから確定する（DevToolsで確認）</h2>
+<p>ここから先は「実装に迷わない」ために、<strong>項目ごとにセレクタ（取り方）を決めてメモ</strong>します。<br />
+今回の基本情報は、以下のセレクタで取得できる想定です。</p>
+<h3 id="2-1">2-1. 基本情報（店舗詳細ページ）での取得方法</h3>
+<ul>
+<li><strong>業種</strong>：<code>span[itemprop="servesCuisine"]</code></li>
+<li><strong>名前</strong>：<code>section div div p:first-child</code></li>
+<li><strong>都道府県</strong>：<code>span[itemprop="addressRegion"]</code></li>
+<li><strong>住所</strong>：<code>span[itemprop="streetAddress"]</code></li>
+<li><strong>電話番号</strong>：<code>p[itemprop="telephone"]</code></li>
+</ul>
+<blockquote>
+<p>itemprop など特殊なのがあるときはそっちを優先させてつかうと特定がしやすい。</p>
+</blockquote>
+<h2 id="id-class">&gt; 優先度でいうと、 特殊な属性 &gt; id &gt; classである。</h2>
+<h2 id="step-3-url">Step 3. 詳細ページへの導線URLパターンを整理する（どこから辿るか）</h2>
+<p>次に「詳細ページURLをどう集めるか」を決める。<br />
+最も確実なのは、ユーザー目線で実際にサイトを操作して、出てくるURLを観察すること。</p>
+<h3 id="3-1-url">3-1. ページタイプを分類する（導線ページのURLパターン）</h3>
+<p>実際に検索・ナビ操作すると、以下のページタイプ（=一覧/検索ページ）が見つかる。</p>
+<ul>
+<li>
+<p>エリア<br />
+  例：https://paypaygourmet.yahoo.co.jp/area/tokyo/011/0026/<br />
+  パターン：<code>/area/</code> から始まる</p>
+</li>
+<li>
+<p>ジャンル<br />
+  例：https://paypaygourmet.yahoo.co.jp/t-genre/t-genre3581/<br />
+  パターン：<code>/t-genre/</code> から始まる</p>
+</li>
+<li>
+<p>シーン<br />
+  例：https://paypaygourmet.yahoo.co.jp/t-scene/t-scene368/<br />
+  パターン：<code>/t-scene/</code> から始まる</p>
+</li>
+<li>
+<p>検索結果<br />
+  例：https://paypaygourmet.yahoo.co.jp/search?...<br />
+  パターン：<code>/search?</code>（クエリ付き）</p>
+</li>
+</ul>
+<blockquote>
+<p>これらは「詳細ページへ飛べるリンクが載っているページ」なので、Scrapyでは基本的に <strong>follow対象（辿る対象）</strong> になる。</p>
+</blockquote>
+<hr />
+<h2 id="step-4-url">Step 4. 詳細ページURLパターンを決める（どれが詳細か判定する）</h2>
+<h3 id="4-1-url">4-1. 詳細ページの共通点をURLから見つける</h3>
+<p>店舗詳細ページは URL直下に数字IDが入るパターンになっている。</p>
+<ul>
+<li>例：<code>https://paypaygourmet.yahoo.co.jp/105355</code></li>
+</ul>
+<h3 id="4-2">4-2. 詳細ページ判定ルールを明文化する</h3>
+<ul>
+<li>詳細ページ：<code>/数字</code>（ルート直下が数字のみ）</li>
+<li>reviewsページ：<code>/数字/reviews</code></li>
+</ul>
+<blockquote>
+<p>なお「1から順に全部ある」タイプではなく、試すと404もある。<br />
+数字を総当たりする方法も理論上可能だが再現性が低く、今回は <strong>導線ページから辿って集める方針</strong>を採用する。</p>
+</blockquote>
+<hr />
+<h2 id="step-5-urlstart_urls">Step 5. 入口（起点URL）を決める（start_urls）</h2>
+<p>クロール開始URLは「実際に自分で辿って通った最初のURL」を使うのが安全。</p>
+<ul>
+<li>基本はトップ（<code>/</code>）から始めればよい</li>
+<li>今回もトップから各ページタイプへ遷移できるため、起点はこれでOK<br />
+<code>https://paypaygourmet.yahoo.co.jp/</code></li>
+</ul>
+<hr />
+<h1 id="_1">まとめ</h1>
+<h2 id="a-url">A. 詳細ページへの導線URLパターン</h2>
+<ul>
+<li><code>/area/</code></li>
+<li><code>/t-genre/</code></li>
+<li><code>/t-scene/</code></li>
+<li><code>/search?</code></li>
+</ul>
+<h2 id="b-url">B. 詳細ページURLパターン</h2>
+<ul>
+<li><code>/数字</code></li>
+</ul>
+<h2 id="c">C. 詳細ページのデータの取り方（項目ごとの仕様）</h2>
+<ul>
+<li>業種：<code>span[itemprop="servesCuisine"]</code></li>
+<li>名前：<code>section div div p:first-child</code></li>
+<li>都道府県：<code>span[itemprop="addressRegion"]</code></li>
+<li>住所：<code>span[itemprop="streetAddress"]</code></li>
+<li>電話番号：<code>p[itemprop="telephone"]</code></li>
+</ul>
+<p>これを<a href="/prompts/spider">プロンプト</a>に入力してコードを生成されると以下のような感じのものができる</p>
+<pre><code class="language-python">import os
+from datetime import datetime, timezone
+
+import scrapy
+from scrapy.linkextractors import LinkExtractor
+from scrapy.spiders import CrawlSpider, Rule
+
+# CRAWL_DEBUG が False 相当のときだけ crawlab を使う
+def _is_truthy(v: str) -&gt; bool:
+    return str(v).strip().lower() in (&quot;1&quot;, &quot;true&quot;, &quot;yes&quot;, &quot;y&quot;, &quot;on&quot;)
+
+CRAWL_DEBUG = _is_truthy(os.getenv(&quot;CRAWL_DEBUG&quot;, &quot;false&quot;))
+if not CRAWL_DEBUG:
+    from crawlab import save_item
+
+
+class PaypaygurumeSSpider(CrawlSpider):
+    name = &quot;paypaygurume_s&quot;
+    allowed_domains = [&quot;paypaygourmet.yahoo.co.jp&quot;]
+    start_urls = [&quot;https://paypaygourmet.yahoo.co.jp/&quot;]
+
+    rules = (
+        # 詳細ページ（絶対URLで判定）
+        Rule(
+            LinkExtractor(
+                allow=(r&quot;^https?://paypaygourmet\.yahoo\.co\.jp/\d+/?$&quot;,),
+                unique=True,
+            ),
+            callback=&quot;parse_detail&quot;,
+            follow=False,
+        ),
+        # 一覧/導線ページ（必要なパスのみ辿る）
+        Rule(
+            LinkExtractor(
+                allow=(
+                    r&quot;^https?://paypaygourmet\.yahoo\.co\.jp/area/.*$&quot;,
+                    r&quot;^https?://paypaygourmet\.yahoo\.co\.jp/t-genre/.*$&quot;,
+                    r&quot;^https?://paypaygourmet\.yahoo\.co\.jp/t-scene/.*$&quot;,
+                    r&quot;^https?://paypaygourmet\.yahoo\.co\.jp/search\?.*$&quot;,
+                ),
+                unique=True,
+            ),
+            follow=True,
+        ),
+    )
+
+    def parse_detail(self, response):
+        # 取得日時はISO8601（ローカルTZ）
+        now_iso = datetime.now(timezone.utc).astimezone().isoformat()
+
+        cuisines = [t.strip() for t in response.css('span[itemprop=&quot;servesCuisine&quot;]::text').getall() if t.strip()]
+        item = {
+            &quot;取得日時&quot;: now_iso,
+            &quot;取得URL&quot;: response.url,
+            &quot;業種&quot;: &quot; / &quot;.join(cuisines) if cuisines else &quot;&quot;,
+            &quot;名前&quot;: (response.css(&quot;section div div p:first-child::text&quot;).get() or &quot;&quot;).strip(),
+            &quot;都道府県&quot;: (response.css('span[itemprop=&quot;addressRegion&quot;]::text').get() or &quot;&quot;).strip(),
+            &quot;住所&quot;: (response.css('span[itemprop=&quot;streetAddress&quot;]::text').get() or &quot;&quot;).strip(),
+            &quot;電話番号&quot;: (response.css('p[itemprop=&quot;telephone&quot;]::text').get() or &quot;&quot;).strip(),
+        }
+
+        if not CRAWL_DEBUG:
+            save_item(item)
+
+        yield item
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  ページトップへ戻る
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
