@@ -1,14 +1,29 @@
 site_name: STREAMスクレイピングマニュアル
+site_url: https://stream-inc.github.io/stream-scraping-template/
 
 theme:
   name: material
+  language: ja
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.top
+    - toc.follow
 
 nav:
   - スクレイピング手順:
-    - 1 取得できる項目を列挙する: guide/1-1.md
-    - 2 html構造を見つける: guide/1-2.md
-    - 3 ページタイプを分類する: guide/2-1.md
-    - 4 起点URLを決める: guide/2-2.md
-    - 5 まとめ: guide/3-1.md
+      - 1 取得できる項目を列挙する: guide/1-1.md
+      - 2 html構造を見つける: guide/1-2.md
+      - 3 ページタイプを分類する: guide/2-1.md
+      - 4 起点URLを決める: guide/2-2.md
+      - 5 まとめ: guide/3-1.md
+
   - チュートリアル:
-    - paypayグルメ: tutorials/paypaygurume.md
+      - PayPayグルメ: tutorials/paypaygurume.md
+
+  - Setup:
+      - WSL: setup/wsl.md
+
+  - Prompts:
+      - Spider: prompts/spider.md
