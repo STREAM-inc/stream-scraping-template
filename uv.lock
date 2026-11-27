@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.10"
 
 [[package]]
@@ -998,7 +998,7 @@ wheels = [
 
 [[package]]
 name = "scrapy"
-version = "2.13.4"
+version = "2.17.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cryptography" },
@@ -1020,9 +1020,9 @@ dependencies = [
     { name = "w3lib" },
     { name = "zope-interface" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/08/ef/827db21986672723741ef1c384f4e5a09b0a552936ae638b6426e71d3a6e/scrapy-2.13.4.tar.gz", hash = "sha256:e09bce40c56b56f9f86b0d078a0e5cdd08283c83076170ce7a8eec7189ac2493", size = 1220580, upload-time = "2025-11-17T11:32:27.137Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/35/9f/9800513193aacb44825f0b9a75e4e6d4a0c416e9ed23ca3aac7374d03d17/scrapy-2.17.0.tar.gz", hash = "sha256:b536d14166b05e2183b19ae105a7af849cd14d4c1f70d3009d9b1828c0ab3d92", size = 1312077, upload-time = "2026-07-07T10:27:43.298Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/17/23/3a35660c44bd7c116a83ddd23f99a1add46276b15ca7103492a73d5fdf4f/scrapy-2.13.4-py3-none-any.whl", hash = "sha256:9bf36700aefa4983cc48b2cb0e1564161a340e19f73862778e2ed44ec5bbde6a", size = 321567, upload-time = "2025-11-17T11:32:24.891Z" },
+    { url = "https://files.pythonhosted.org/packages/71/e8/30fbfcb45b35da9e24c6f1ae193688dc834cef3fd576a41d3a08ef771125/scrapy-2.17.0-py3-none-any.whl", hash = "sha256:a650a59e9425e7e4b4d59083f858df34ec9a5a8292b3e35671d444fb56fe5085", size = 350445, upload-time = "2026-07-07T10:27:41.59Z" },
 ]
 
 [[package]]
